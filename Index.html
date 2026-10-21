@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F26B6B">
+<title>Study Wale | Free Learning Hub</title>
+<style>
+:root{--red:#F26B6B;--yellow:#FFD166;--white:#FFFFFF;--text:#292929;--muted:#666;--bg:#FFFAF7;--border:#F0DED8}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{text-decoration:none;color:inherit}
+button,input,select{font:inherit}
+header{background:white;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+.nav{max-width:1100px;margin:auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.logo{color:var(--red);font-size:23px;font-weight:900}
+.logo span{color:var(--text)}
+nav{display:flex;gap:13px;flex-wrap:wrap}
+nav a{font-size:13px;font-weight:bold}
+nav a:hover{color:var(--red)}
+main{max-width:1100px;margin:auto;padding:18px 16px}
+.hero{background:var(--red);color:white;padding:36px 23px;border-radius:20px;margin-top:10px}
+.hero h1{font-size:clamp(32px,7vw,48px);line-height:1.15;margin:12px 0}
+.highlight{color:var(--yellow)}
+.hero p{max-width:650px}
+.btn{display:inline-block;background:var(--yellow);color:var(--text);border:0;border-radius:9px;padding:11px 15px;font-weight:bold;cursor:pointer;margin:3px}
+.btn-red{background:var(--red);color:white}
+.btn-white{background:white}
+.section{margin-top:34px;scroll-margin-top:85px}
+h2{font-size:25px;line-height:1.3;margin:0 0 8px}
+h3{margin:5px 0}
+.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:16px}
+.card{background:white;border:1px solid var(--border);border-radius:14px;padding:17px}
+.card p{color:var(--muted);font-size:14px}
+.icon{font-size:27px}
+input,select{width:100%;padding:12px;border:1px solid #D9C9C3;border-radius:9px;background:white;color:var(--text)}
+.search-row{display:flex;gap:8px;margin-top:14px}
+.search-row input{flex:1}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:15px 0}
+.notice{background:#FFF4D6;border-left:4px solid var(--yellow);padding:12px;border-radius:8px;font-size:14px;margin-top:14px}
+.item{padding:12px 0;border-bottom:1px solid var(--border)}
+.item small{display:block;color:var(--muted)}
+.hidden{display:none!important}
+.quiz-box{background:white;border:1px solid var(--border);border-radius:13px;padding:18px;margin-top:15px}
+.option{display:block;width:100%;text-align:left;background:white;border:1px solid var(--border);border-radius:8px;padding:11px;margin-top:8px;cursor:pointer}
+.option:disabled{cursor:default}
+footer{margin-top:40px;padding:25px 16px;text-align:center;background:white;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
+@media(max-width:600px){.hero{padding:26px 17px}nav{gap:10px}.search-row{flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+<div class="nav">
+<a class="logo" href="#home">STUDY <span>WALE</span></a>
+<nav>
+<a href="#home">Home</a>
+<a href="#classes">Classes</a>
+<a href="#resources">Resources</a>
+<a href="#quiz">Quiz</a>
+<a href="#explore">Explore</a>
+</nav>
+</div>
+</header>
+<main>
+
+<section class="section" id="classes">
+<h2>Choose Your Class</h2>
+<p class="muted">Select your class to explore subjects and study materials.</p>
+<div class="grid">
+<article class="card">
+<div class="icon">📘</div>
+<h3>Class 9</h3>
+<p>Mathematics, Science, Social Science, English and Computer Applications.</p>
+<button class="btn btn-red" onclick="showClass('9')">Explore Class 9</button>
+</article>
+<article class="card">
+<div class="icon">📗</div>
+<h3>Class 10</h3>
+<p>Mathematics, Science, Social Science, English and Computer Applications.</p>
+<button class="btn btn-red" onclick="showClass('10')">Explore Class 10</button>
+</article>
+<article class="card">
+<div class="icon">📙</div>
+<h3>Class 11</h3>
+<p>Choose PCM, PCB or other available subjects.</p>
+<button class="btn btn-red" onclick="showClass('11')">Explore Class 11</button>
+</article>
+<article class="card">
+<div class="icon">📕</div>
+<h3>Class 12</h3>
+<p>Choose PCM, PCB or other available subjects.</p>
+<button class="btn btn-red" onclick="showClass('12')">Explore Class 12</button>
+</article>
+</div>
+<div id="classResults" class="card hidden" style="margin-top:16px">
+<h3 id="classTitle"></h3>
+<div id="subjectList"></div>
+</div>
+</section>
+
+<section class="section" id="resources">
+<h2>Study Resources</h2>
+<p class="muted">Choose a resource type to get started.</p>
+<div class="grid">
+<article class="card">
+<div class="icon">📚</div>
+<h3>Chapter Notes</h3>
+<p>Organized notes for revision and learning.</p>
+<button class="btn" onclick="showResource('Notes')">Explore Notes</button>
+</article>
+<article class="card">
+<div class="icon">✅</div>
+<h3>MCQs and Practice</h3>
+<p>Practice multiple-choice and written questions.</p>
+<button class="btn" onclick="showResource('Practice Questions')">Practice Now</button>
+</article>
+<article class="card">
+<div class="icon">📝</div>
+<h3>Previous Year Questions</h3>
+<p>Find exam questions as verified materials are added.</p>
+<button class="btn" onclick="showResource('PYQs')">Explore PYQs</button>
+</article>
+<article class="card">
+<div class="icon">📄</div>
+<h3>PDF Materials</h3>
+<p>Downloadable learning materials when available.</p>
+<button class="btn" onclick="showResource('PDF Downloads')">View PDFs</button>
+</article>
+</div>
+<div id="resourceResults" class="notice hidden" aria-live="polite"></div>
+</section>
+
+<section class="section" id="quiz">
+<h2>Quick Knowledge Quiz</h2>
+<p class="muted">Test your knowledge with a sample question.</p>
+<div class="quiz-box">
+<p id="question"><strong>1. Which planet is known as the Red Planet?</strong></p>
+<div id="options">
+<button class="option" onclick="answerQuiz(this,false)">A. Venus</button>
+<button class="option" onclick="answerQuiz(this,true)">B. Mars</button>
+<button class="option" onclick="answerQuiz(this,false)">C. Jupiter</button>
+<button class="option" onclick="answerQuiz(this,false)">D. Mercury</button>
+</div>
+<p id="quizFeedback" aria-live="polite"></p>
+<p id="quizScore">Score: 0</p>
+<button class="btn" onclick="resetQuiz()">Try Again</button>
+</div>
+</section>
+
+<section class="section" id="explore">
+<h2>Explore More</h2>
+<p class="muted">Discover more ways to learn beyond your textbooks.</p>
+<div class="grid">
+<article class="card">
+<div class="icon">🔬</div>
+<h3>Science & Technology</h3>
+<p>Explore scientific discoveries, inventions and technology explained simply.</p>
+<button class="btn" onclick="showResource('Science & Technology')">Explore</button>
+</article>
+<article class="card">
+<div class="icon">🌍</div>
+<h3>Static GK</h3>
+<p>Learn geography, history, important facts and general knowledge.</p>
+<button class="btn" onclick="showResource('Static GK')">Explore</button>
+</article>
+<article class="card">
+<div class="icon">💡</div>
+<h3>Interesting Facts</h3>
+<p>Discover fascinating facts about the world, nature and science.</p>
+<button class="btn" onclick="showResource('Interesting Facts')">Explore</button>
+</article>
+<article class="card">
+<div class="icon">🤖</div>
+<h3>AI Learning Resources</h3>
+<p>Discover AI tools and learn how to use them for studying.</p>
+<button class="btn" onclick="showResource('AI Learning Resources')">Explore</button>
+</article>
+</div>
+</section>
+
+<div class="section notice">
+<strong>Important:</strong> Study Wale is a learning platform. Notes, verified previous-year questions and downloadable PDFs will be added as the content library grows. Always check your official school board syllabus.
+</div>
+
+</main>
+
+<footer>
+<strong>STUDY WALE</strong>
+<p>Learn Better. Grow Smarter.</p>
+<p>Free educational resources for curious learners.</p>
+<p>© <span id="year"></span> Study Wale</p>
+</footer>
+
+<script>
+const subjects = {
+"9": [
+"Mathematics","Science","Social Science",
+"English","Computer Applications"
+],
+"10": [
+"Mathematics","Science","Social Science",
+"English","Computer Applications"
+],
+"11": [
+"Physics","Chemistry","Mathematics (PCM)",
+"Biology (PCB)","English","Physical Education",
+"Computer Science"
+],
+"12": [
+"Physics","Chemistry","Mathematics (PCM)",
+"Biology (PCB)","English","Physical Education",
+"Computer Science"
+]
+};
+
+function showClass(cls) {
+  const box = document.getElementById("classResults");
+  const title = document.getElementById("classTitle");
+  const list = document.getElementById("subjectList");
+  title.textContent = "Class " + cls + " Subjects";
+  list.innerHTML = "";
+
+  if (cls === "11" || cls === "12") {
+    const label = document.createElement("p");
+    label.textContent = "Choose your stream:";
+    list.appendChild(label);
+
+    ["PCM","PCB","Other Subjects"].forEach(function(stream) {
+      const btn = document.createElement("button");
+      btn.className = "btn";
+      btn.textContent = stream;
+      btn.onclick = function() {
+        showStream(cls, stream);
+      };
+      list.appendChild(btn);
+    });
+  }
+
+  subjects[cls].forEach(function(subject) {
+    const row = document.createElement("div");
+    row.className = "item";
+    row.textContent = subject;
+    list.appendChild(row);
+  });
+
+  box.classList.remove("hidden");
+  box.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function showStream(cls, stream) {
+  const list = document.getElementById("subjectList");
+  const title = document.getElementById("classTitle");
+  title.textContent = "Class " + cls + " — " + stream;
+
+  let chosen;
+  if (stream === "PCM") {
+    chosen = ["Physics","Chemistry","Mathematics","English",
+      "Physical Education","Computer Science"];
+  } else if (stream === "PCB") {
+    chosen = ["Physics","Chemistry","Biology","English",
+      "Physical Education","Computer Science"];
+  } else {
+    chosen = ["English","Physical Education","Computer Science",
+      "Choose additional subjects according to your school"];
+  }
+
+  list.innerHTML = "";
+  chosen.forEach(function(subject) {
+    const row = document.createElement("div");
+    row.className = "item";
+    row.textContent = subject;
+    list.appendChild(row);
+  });
+}
+
+function showResource(name) {
+  const box = document.getElementById("resourceResults");
+  box.textContent = name +
+    ": This section is ready for learning materials. Content and verified downloads will be added as they become available.";
+  box.classList.remove("hidden");
+  box.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+const searchItems = [
+  {name:"Class 9",detail:"School subjects",target:"classes"},
+  {name:"Class 10",detail:"School subjects",target:"classes"},
+  {name:"Class 11 PCM",detail:"Physics, Chemistry and Mathematics",target:"classes"},
+  {name:"Class 11 PCB",detail:"Physics, Chemistry and Biology",target:"classes"},
+  {name:"Class 12 PCM",detail:"Physics, Chemistry and Mathematics",target:"classes"},
+  {name:"Class 12 PCB",detail:"Physics, Chemistry and Biology",target:"classes"},
+  {name:"Chapter Notes",detail:"Study resources",target:"resources"},
+  {name:"MCQs",detail:"Practice questions",target:"resources"},
+  {name:"Practice Questions",detail:"Test your knowledge",target:"resources"},
+  {name:"PYQs",detail:"Previous year questions",target:"resources"},
+  {name:"PDF Downloads",detail:"Learning materials",target:"resources"},
+  {name:"Science & Technology",detail:"Explore science",target:"explore"},
+  {name:"Static GK",detail:"General knowledge",target:"explore"},
+  {name:"Interesting Facts",detail:"Discover new facts",target:"explore"},
+  {name:"AI Learning Resources",detail:"Learn about AI tools",target:"explore"},
+  {name:"Quiz",detail:"Test your knowledge",target:"quiz"}
+];
+
+function searchWebsite() {
+  const query = document.getElementById("searchInput")
+    .value.trim().toLowerCase();
+  const results = document.getElementById("searchResults");
+  results.innerHTML = "";
+
+  if (!query) {
+    results.textContent = "Please enter something to search.";
+    return;
+  }
+
+  const matches = searchItems.filter(function(item) {
+    return (item.name + " " + item.detail).toLowerCase()
+      .includes(query);
+  });
+
+  if (matches.length === 0) {
+    results.textContent = "No matching section found. Try another keyword.";
+    return;
+  }
+
+  matches.forEach(function(item) {
+    const row = document.createElement("div");
+    row.className = "item";
+
+    const link = document.createElement("a");
+    link.href = "#" + item.target;
+    link.textContent = item.name + " — " + item.detail;
+    link.style.color = "#F26B6B";
+    link.style.fontWeight = "bold";
+
+    row.appendChild(link);
+    results.appendChild(row);
+  });
+}
+
+document.getElementById("searchButton")
+  .addEventListener("click", searchWebsite);
+
+document.getElementById("searchInput")
+  .addEventListener("keydown", function(event) {
+    if (event.key === "Enter") searchWebsite();
+  });
+
+let score = 0;
+let answered = false;
+
+function answerQuiz(button, correct) {
+  if (answered) return;
+  answered = true;
+
+  const feedback = document.getElementById("quizFeedback");
+  if (correct) {
+    score++;
+    feedback.textContent = "Correct! Well done.";
+  } else {
+    feedback.textContent = "Not quite. The correct answer is Mars.";
+  }
+
+  document.getElementById("quizScore").textContent =
+    "Score: " + score;
+
+  document.querySelectorAll(".option").forEach(function(option) {
+    option.disabled = true;
+  });
+}
+
+function resetQuiz() {
+  answered = false;
+  document.getElementById("quizFeedback").textContent = "";
+  document.querySelectorAll(".option").forEach(function(option) {
+    option.disabled = false;
+  });
+}
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+</script>
+</body>
+</html>
+
+
